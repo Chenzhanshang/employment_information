@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.clb.employment_information.dao.ChairDao">
+    <insert id="insertChair" parameterType="Chair">
+        insert into t_chair(chair_id, chair_time, chair_site, chair_sum, now_sum, chair_name)
+        values (#{chairId},#{chairTime},#{chairSite},#{chairSum},#{nowSum},#{chairName})
+    </insert>
+
+    <select id="getAllChair" resultType="Chair">
+        select * from t_chair
+    </select>
+
+    <select id="selectChairUser" parameterType="String" resultType="ChairUser">
+        select * from t_chair_user where chair_id = #{chairId} and user_id = #{userId}
+    </select>
+
+    <insert id="insertChairUser" parameterType="String">
+        insert into t_chair_user(chair_id,user_id) values (#{chairId},#{userId})
+    </insert>
+
+    <update id="updateChairNowSum" parameterType="String">
+        update t_chair set now_sum = now_sum+1 where chair_id = #{v}
+    </update>
+
+    <update id="updateChair" parameterType="Chair">
+        update t_chair set chair_name = #{chairName}, chair_site = #{chairSite},
+        chair_sum = #{chairSum}, chair_time = #{chairTime}
+        where chair_id = #{chairId}
+    </update>
+    <delete id="deleteChairUser" parameterType="String">
+        delete from t_chair_user where chair_id = #{v}
+    </delete>
+
+    <delete id="deleteChairUserByUserId" parameterType="String">
+        delete from t_chair_user where user_id = #{v}
+    </delete>
+
+    <delete id="deleteChair" parameterType="String">
+        delete from t_chair where chair_id = #{v}
+    </delete>
+</mapper>

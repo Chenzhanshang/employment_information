@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.clb.employment_information.dao.AnnouncementDao">
+    <insert id="insertAnnouncement" parameterType="Announcement">
+        insert into t_announcement (announcement_id, user_id, announcement_title,announcement_content)
+        values (#{announcementId},#{user.userId},#{announcementTitle},#{announcementContent});
+    </insert>
+
+    <select id="getAllAnnouncement" resultMap="announcementMap">
+        select ta.announcement_id announcement_id, ta.announcement_content announcement_content,
+        ta.announcement_title announcement_title, tu.user_id user_id,tu.user_name user_name
+        from t_announcement ta
+        left join t_user tu on ta.user_id = tu.user_id
+    </select>
+    <resultMap id="announcementMap" type="Announcement">
+        <id column="announcement_id" property="announcementId" javaType="String" />
+        <result column="announcement_content" property="announcementContent" javaType="String" />
+        <result column="announcement_title" property="announcementTitle" javaType="String" />
+        <association property="user" javaType="User" column="user_id">
+            <id column="user_id" property="userId" javaType="String" />
+            <result column="user_name" property="userName" javaType="String" />
+        </association>
+    </resultMap>
+    <update id="updateAnnouncement" parameterType="Announcement">
+        update t_announcement set user_id = #{user.userId}, announcement_title = #{announcementTitle},
+        announcement_content = #{announcementContent} where announcement_id = #{announcementId}
+    </update>
+
+    <delete id="deleteAnnouncement" parameterType="String">
+        delete from t_announcement where announcement_id = #{v}
+    </delete>
+</mapper>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.clb.employment_information.dao.UserDao">
+    <insert id="insertUser" parameterType="User">
+        insert into t_user (user_id, name, phone, email, user_name, id_card, password, role, sex)
+        values (#{userId},#{name},#{phone},#{email},#{userName},#{idCard},#{password},0,#{sex})
+    </insert>
+
+    <select id="getUserByUserNameAndPassword" parameterType="User" resultType="User">
+        select * from t_user where user_name = #{userName} and password = #{password}
+    </select>
+
+    <select id="getUserByUserMsg" parameterType="User" resultType="User">
+        select * from t_user where name = #{name} and id_card = #{idCard} and phone = #{phone} and email = #{email}
+    </select>
+
+    <select id="getUserByUserName" parameterType="String" resultType="User">
+        select * from t_user where user_name = #{v}
+    </select>
+
+    <update id="updateUser" parameterType="User" >
+        update t_user set name = #{name},id_Card = #{idCard},phone = #{phone},email = #{email},
+        sex = #{sex} where user_name=#{userName}
+    </update>
+
+    <update id="updatePassword" parameterType="User" >
+        update t_user set password = #{password} where user_name=#{userName}
+    </update>
+
+    <select id="getAllUser" resultType="User">
+        select * from t_user
+    </select>
+
+    <delete id="deleteUser" parameterType="String" >
+        delete from t_user where user_id = #{v}
+    </delete>
+</mapper>

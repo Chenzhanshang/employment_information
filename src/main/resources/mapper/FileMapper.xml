@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.clb.employment_information.dao.FileDao">
+    <insert id="insertFile" parameterType="File">
+        insert into t_file (file_id, file_name, file_path, file_describe) values (#{fileId}, #{fileName}, #{filePath}, #{fileDescribe});
+    </insert>
+
+    <select id="getAllFile" resultType="File">
+        select * from t_file
+    </select>
+    <update id="updateFile" parameterType="File">
+        update t_file set file_describe = #{fileDescribe} where file_id = #{fileId}
+    </update>
+
+    <delete id="deleteFile" parameterType="String">
+        delete from t_file where file_id = #{v}
+    </delete>
+</mapper>

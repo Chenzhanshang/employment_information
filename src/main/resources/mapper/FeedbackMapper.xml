@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+    <!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    <mapper namespace="com.clb.employment_information.dao.FeedbackDao">
+        <insert id="insertFeedback" parameterType="Feedback">
+        insert into t_feedback (feedback_id, user_id, feedback_content) values (#{feedbackId},#{user.userId},#{feedbackContent});
+    </insert>
+
+    <select id="getAllFeedback" resultMap="feedbackMap">
+        select tf.feedback_id feedback_id, tf.feedback_content feedback_content,
+        tu.user_id user_id,tu.user_name user_name, tu.name name
+        from t_feedback  tf
+        left join t_user tu
+        on tf.user_id = tu.user_id
+    </select>
+    <resultMap id="feedbackMap" type="Feedback">
+        <id column="feedback_id" property="feedbackId" javaType="String"></id>
+        <result column="feedback_content" property="feedbackContent" javaType="String"></result>
+        <association property="user" javaType="User" column="user_id">
+            <id column="user_id" property="userId" javaType="String"></id>
+            <result column="user_name" property="userName" javaType="String"></result>
+            <result column="name" property="name" javaType="String"></result>
+        </association>
+
+    </resultMap>
+</mapper>
